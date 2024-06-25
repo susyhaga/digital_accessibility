@@ -124,15 +124,20 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Função para falar o nome da língua selecionada
-    function speakLanguageName(lang) {
-        const languageNames = {
-            'pt-BR': 'Português',
-            'en-US': 'English'
-        };
-        const langName = languageNames[lang];
+   // Função para falar o nome da língua selecionada
+function speakLanguageName(lang) {
+    const languageNames = {
+        'pt-BR': 'Português',
+        'en-US': 'English'
+    };
+    const langName = languageNames[lang];
+    if (langName) {
         speakText(langName, lang);
+    } else {
+        console.log('Linguagem não suportada:', lang);
     }
+}
+
 
     // Evento ao pressionar teclas no hoverTextArea
     document.addEventListener('keydown', function (event) {
