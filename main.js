@@ -91,21 +91,20 @@ document.addEventListener('DOMContentLoaded', function () {
     //PARTE DAS teclas
     // Função para processar a ação de 'Enter' no textarea
     function handleEnterKey() {
-        window.listen(); // Inicia a leitura quando Enter é pressionado
-        if (pdfFile) {
+        const text = hoverTextArea.value.trim();
+    
+        if (text !== '') {
+            resetSpeech(); // Cancela a leitura atual se estiver ocorrendo
+            isPaused = false;
+            speakText(text, langSelect.value);
+            isTextAreaReading = true; // Define que está lendo texto do textarea
+        } else if (pdfFile) {
             resetSpeech(); // Cancela a leitura atual se estiver ocorrendo
             isPaused = false;
             isPdfReading = true;
             readPdfContent(pdfFile);
         } else {
-            const text = hoverTextArea.value.trim();
-            if (text !== '') {
-                resetSpeech(); // Cancela a leitura atual se estiver ocorrendo
-                isPaused = false;
-                speakText(text, langSelect.value);
-            } else {
-                console.log('Nenhum texto para ler.');
-            }
+            console.log('Nenhum texto para ler.');
         }
     }
 
@@ -147,7 +146,14 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         if (key === 'enter') {
             event.preventDefault();
-            handleEnterKey();
+            const text = hoverTextArea.value.trim() || 'Default text if textarea is empty.';
+            listen(text);
+            if (pdfFile) {
+                resetSpeech();
+                isPaused = false;
+                isPdfReading = true;
+                readPdfContent(pdfFile);
+            }
         } else if (key === 's') {
             event.preventDefault();
             handleSKey();
