@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const enAudio = document.getElementById('en_audio');
     const fileNameContainer = document.getElementById('fileNameContainer');
     const fileInput = document.getElementById('fileInput');
+    const availableFilesContainer = document.getElementById('availableFilesContainer');
 
     // Variáveis para controle do discurso
     let isPaused = false;
@@ -25,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let resumeIndex = 0;
     let pdfContent = '';
     let typedWord = '';
-        speakText('Welcome to Digital accessibility. Here you can listen to all the text type. Select a language: P for Portuguese and E for English. Then, press "L" to load a text. And press "ENTER" to listen, "S" to stop and "C" to go on. Enjoy it!', 'en-US');
+    speakText('Welcome to Digital accessibility. Here you can listen to all the text type. Select a language: P for Portuguese and E for English. Then, press "L" to load a text. And press "ENTER" to listen, "S" to stop and "C" to go on. Enjoy it!', 'en-US');
 
     //FUNCOES GLOBAIS
 
@@ -78,6 +79,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     };
 
+
+
     //PARTE DAS teclas
     // Função para processar a ação de 'Enter' no textarea
     function handleEnterKey() {
@@ -88,7 +91,15 @@ document.addEventListener('DOMContentLoaded', function () {
             isPdfReading = true;
             readPdfContent(pdfFile);
         } else {
-            console.log('Nenhum arquivo PDF carregado.');
+            const text = hoverTextArea.value.trim();
+            if (text !== '') {
+                resetSpeech(); // Cancela a leitura atual se estiver ocorrendo
+                isPaused = false;
+                isTextAreaReading = true;
+                speakText(text, langSelect.value);
+            } else {
+                console.log('Nenhum texto para ler.');
+            }
         }
     }
 
@@ -224,22 +235,22 @@ document.addEventListener('DOMContentLoaded', function () {
         reader.readAsText(file);
     }
 
-   // Evento ao mudar o arquivo selecionado no input file
-fileInput.addEventListener('change', function () {
-    const file = this.files[0];
-    if (file) {
-        resetSpeech(); // Cancela qualquer leitura atual
-        resetPdfContent(); // Limpa o conteúdo do PDF atual
+    // Evento ao mudar o arquivo selecionado no input file
+    fileInput.addEventListener('change', function () {
+        const file = this.files[0];
+        if (file) {
+            resetSpeech(); // Cancela qualquer leitura atual
+            resetPdfContent(); // Limpa o conteúdo do PDF atual
 
-        fileNameContainer.textContent = file.name; // Mostra o nome do novo arquivo
-        readPdfContent(file); // Lê e processa o novo arquivo PDF
-    } else {
-        pdfFile = null; // Limpa o arquivo PDF atual
-        fileNameContainer.textContent = 'No file chosen';
-        resetPdfContent(); // Limpa o conteúdo do PDF atual
-        resetSpeech(); // Cancela qualquer leitura atual
-    }
-});
+            fileNameContainer.textContent = file.name; // Mostra o nome do novo arquivo
+            readPdfContent(file); // Lê e processa o novo arquivo PDF
+        } else {
+            pdfFile = null; // Limpa o arquivo PDF atual
+            fileNameContainer.textContent = 'No file chosen';
+            resetPdfContent(); // Limpa o conteúdo do PDF atual
+            resetSpeech(); // Cancela qualquer leitura atual
+        }
+    });
     // Limpar conteúdo do PDF
     function resetPdfContent() {
         pdfContent = '';
@@ -368,35 +379,39 @@ fileInput.addEventListener('change', function () {
     });
 
     // Função para lidar com mouseenter
-    function handleMouseEnter(element, text, lang) {
-        element.addEventListener('mouseenter', function () {
-            if (!isTextAreaReading && !isSpeaking && !isPdfReading) {
-                speakContent(text, lang);
+    // Função para lidar com mouseenter
+function handleMouseEnter(element, text, lang) {
+    element.addEventListener('mouseenter', function () {
+        if (!isSpeaking && !isPdfReading) {
+            // Fala o texto apenas se não estiver lendo o textarea
+            if (!isTextAreaReading || element !== hoverTextArea) {
+                speakText(text, lang);
+            }
+        } else {
+            console.log('Não foi possível falar o texto. A síntese de fala já está em andamento ou pausada.');
+        }
+    });
+}
+
+
+    // Função genérica para cancelar a fala quando o usuário sai do elemento
+    function cancelSpeechOnMouseLeave(element) {
+        element.addEventListener('mouseleave', function () {
+            // Verifica se está lendo texto do textarea
+            if (isTextAreaReading && element === hoverTextArea) {
+                return; // Não cancela se estiver lendo o textarea e é o hoverTextArea
+            }
+            // Verifica se está lendo PDF
+            if (isPdfReading && element === fileNameContainer) {
+                return; // Não cancela se estiver lendo o PDF e é o fileNameContainer
+            }
+            // Se não estiver lendo nada, cancela a fala
+            if (!isSpeaking && !isPdfReading) {
+                resetSpeech();
             }
         });
     }
 
-
-// Função genérica para cancelar a fala quando o usuário sai do elemento
-function cancelSpeechOnMouseLeave(element) {
-    element.addEventListener('mouseleave', function () {
-        // Verifica se está lendo texto do textarea
-        if (isTextAreaReading && element === hoverTextArea) {
-            return; // Não cancela se estiver lendo o textarea e é o hoverTextArea
-        }
-        // Verifica se está lendo PDF
-        if (isPdfReading && element === fileNameContainer) {
-            return; // Não cancela se estiver lendo o PDF e é o fileNameContainer
-        }
-        
-        // Cancela a leitura se não é o elemento do textarea ou PDF
-        if (isTextAreaReading || isPdfReading) {
-            window.speechSynthesis.cancel();
-            isSpeaking = false;
-            isPaused = false;
-        }
-    });
-}
 
     // Chamadas para inicializar os eventos de mouseenter
     handleMouseEnter(hoverTitleText, 'Digital accessibility. First, select a language: "P" for Portuguese and "E" for English. Then, press "L" to load a text. AND: press "ENTER" to listen, "S" to stop and "C" to go on', 'en-US');
@@ -405,7 +420,7 @@ function cancelSpeechOnMouseLeave(element) {
     handleMouseEnter(buttonContinue, 'Continue audio', 'en-US');
     handleMouseEnter(ptAudio, 'Português', 'pt-BR');
     handleMouseEnter(enAudio, 'English', 'en-US');
-    handleMouseEnter(hoverSubTitle, 'Type or paste a text down below. Or, download a file just pressing "L" to be read');
+    handleMouseEnter(hoverSubTitle, 'Type or paste a text down below. Or, download a file just pressing "L" to be read', 'en-US'); // Adicionei 'en-US' como parâmetro
     handleMouseEnter(selectFile, 'Choose your file pressing "L"', 'en-US');
     handleMouseEnter(fileNameContainer, 'No file chosen', 'en-US');
 
