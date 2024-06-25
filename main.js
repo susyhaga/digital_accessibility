@@ -6,8 +6,6 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log('A API speechSynthesis não é suportada neste navegador.');
     }
 
-    speakText('Welcome to Digital accessibility. Here you can listen to all the text type. Select a language: P for Portuguese and E for English. Then, press "L" to load a text. And press "ENTER" to listen, "S" to stop and "C" to go on. Enjoy it!', 'en-US');
-
     // Seleção de elementos do DOM
     const selectLangElement = document.getElementById('select_lang');
     const hoverTitleText = document.getElementById('hoverTitleText');
@@ -172,7 +170,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Função para falar o texto
     function speakText(text, lang, onEndCallback) {
-        if (isSpeaking) return;
+        // Verifica se já está falando
+        if (isSpeaking) {
+            return;
+        }
+
+        // Se estiver pausado, redefine o índice de resumo
         if (isPaused) {
             resumeIndex = 0;
         }
@@ -180,6 +183,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const textChunks = [];
         let currentChunk = '';
         const CHUNK_SIZE = 200;
+
         for (let i = 0; i < words.length; i++) {
             const word = words[i];
             if ((currentChunk + word).length <= CHUNK_SIZE) {
@@ -193,6 +197,7 @@ document.addEventListener('DOMContentLoaded', function () {
             textChunks.push(currentChunk.trim());
         }
         currentTextChunks = textChunks;
+
         function speakNextChunk(startIndex = 0) {
             if (isPaused) return;
             for (let i = startIndex; i < currentTextChunks.length; i++) {
@@ -201,11 +206,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 utterance.volume = 1;
                 utterance.rate = 1;
                 utterance.pitch = 1;
+
                 if (i === startIndex) {
                     utterance.onstart = () => {
                         isSpeaking = true;
                     };
                 }
+
                 if (i === currentTextChunks.length - 1) {
                     utterance.onend = () => {
                         isSpeaking = false;
@@ -224,6 +231,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         speakNextChunk(resumeIndex);
     }
+
+
+    speakText('Welcome to Digital accessibility. Here you can listen to all the text type. Select a language: P for Portuguese and E for English. Then, press "L" to load a text. And press "ENTER" to listen, "S" to stop and "C" to go on. Enjoy it!', 'en-US');
+
 
     //PARTE DO PDF
     //Funcao para abrir a aba OPEN FILE com um click
