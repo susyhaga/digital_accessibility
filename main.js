@@ -101,7 +101,6 @@ document.addEventListener('DOMContentLoaded', function () {
             if (text !== '') {
                 resetSpeech(); // Cancela a leitura atual se estiver ocorrendo
                 isPaused = false;
-                isTextAreaReading = true;
                 speakText(text, langSelect.value);
             } else {
                 console.log('Nenhum texto para ler.');
