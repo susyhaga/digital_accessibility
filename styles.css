@@ -333,7 +333,7 @@ max-width: calc(100% - 90px);
 @media screen and (max-width: 780px) {
     /* Estilos do cabeçalho */
     .container_head {
-        margin-left: 120px;
+        padding-left: 100px;
         padding-bottom: 80px;
         margin:0;
     }
