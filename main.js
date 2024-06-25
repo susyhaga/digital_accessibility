@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
+    speakText('Welcome to Digital accessibility. Here you can listen to all the text type. Select a language: P for Portuguese and E for English. Then, press "L" to load a text. And press "ENTER" to listen, "S" to stop and "C" to go on. Enjoy it!', 'en-US');
+
 
     //para ver se o nav suporta a api speechSynthesis
     if ('speechSynthesis' in window) {
@@ -57,7 +59,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 const lang = langSelect.value;
                 resetSpeech();
                 isPaused = false;
-                isTextAreaReading = true;
                 speakText(text, lang);
             }
         }
@@ -232,7 +233,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         speakNextChunk(resumeIndex);
     }
-    speakText('Welcome to Digital accessibility. Here you can listen to all the text type. Select a language: P for Portuguese and E for English. Then, press "L" to load a text. And press "ENTER" to listen, "S" to stop and "C" to go on. Enjoy it!', 'en-US');
 
     //PARTE DO PDF
     //Funcao para abrir a aba OPEN FILE com um click
