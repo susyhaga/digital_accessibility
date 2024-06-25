@@ -383,7 +383,7 @@ max-width: calc(100% - 90px);
     }
 /* Estilos do subtítulo */
     .sub_title {
-        font-size: 14px;
+        font-size: 18px;
         font-weight: bold;
         white-space: nowrap; /* Impede que o título quebre em várias linhas */
         overflow: hidden; /* Oculta o texto que ultrapassa o contêiner */
