@@ -393,16 +393,13 @@ document.addEventListener('DOMContentLoaded', function () {
     function handleMouseEnter(element, text, lang) {
         element.addEventListener('mouseenter', function () {
             if (!isSpeaking && !isPdfReading) {
-                // Fala o texto apenas se não estiver lendo o textarea
-                if (!isTextAreaReading || element !== hoverTextArea) {
-                    speakText(text, lang);
-                }
+                // Fala o texto diretamente
+                speakText(text, lang);
             } else {
                 console.log('Não foi possível falar o texto. A síntese de fala já está em andamento ou pausada.');
             }
         });
     }
-
 
     // Função genérica para cancelar a fala quando o usuário sai do elemento
     function cancelSpeechOnMouseLeave(element) {
