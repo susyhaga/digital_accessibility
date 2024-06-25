@@ -34,6 +34,9 @@ document.addEventListener('DOMContentLoaded', function () {
     let pdfContent = '';
     let typedWord = '';
 
+
+    speakText('Welcome to Digital accessibility. Here you can listen to all the text type. Select a language: P for Portuguese and E for English. Then, press "L" to load a text. And press "ENTER" to listen, "S" to stop and "C" to go on. Enjoy it!', 'en-US');
+
     //FUNCOES GLOBAIS
 
     // Torne a função acessível globalmente
@@ -51,15 +54,16 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Função global para iniciar a leitura do texto
-    window.listen = function () {
-        const text = hoverTextArea.value.trim();
-        if (text !== '') {
+    window.listen = function (text) {
+        if (text.trim() !== '') {
             if (!isTextAreaReading) {
                 const lang = langSelect.value;
                 resetSpeech();
                 isPaused = false;
                 speakText(text, lang);
             }
+        } else {
+            console.log('Nenhum texto para ler.');
         }
     };
 
@@ -83,8 +87,6 @@ document.addEventListener('DOMContentLoaded', function () {
             window.speechSynthesis.resume(); // Resumir a síntese de fala do navegador
         }
     };
-
-
 
     //PARTE DAS teclas
     // Função para processar a ação de 'Enter' no textarea
@@ -358,6 +360,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Evento ao pressionar o botão de Play
+    
     buttonPlay.addEventListener('click', function () {
         let text = '';
         if (isPdfReading) {
@@ -401,24 +404,24 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Função genérica para cancelar a fala quando o usuário sai do elemento
-    function cancelSpeechOnMouseLeave(element) {
-        element.addEventListener('mouseleave', function () {
-            // Verifica se está lendo texto do textarea
-            if (isTextAreaReading && element === hoverTextArea) {
-                return; // Não cancela se estiver lendo o textarea e é o hoverTextArea
-            }
-            // Verifica se está lendo PDF
-            if (isPdfReading && element === fileNameContainer) {
-                return; // Não cancela se estiver lendo o PDF e é o fileNameContainer
-            }
-            // Se não estiver lendo nada, cancela a fala
-            if (!isSpeaking && !isPdfReading) {
-                resetSpeech();
-            }
-        });
-    }
-    speakText('Welcome to Digital accessibility. Here you can listen to all the text type. Select a language: P for Portuguese and E for English. Then, press "L" to load a text. And press "ENTER" to listen, "S" to stop and "C" to go on. Enjoy it!', 'en-US');
+    
+// Função para cancelar a fala quando o usuário sai do elemento
+function cancelSpeechOnMouseLeave(element) {
+    element.addEventListener('mouseleave', function () {
+        // Verifica se está lendo texto do textarea
+        if (isTextAreaReading && element === hoverTextArea) {
+            return; // Não cancela se estiver lendo o textarea e é o hoverTextArea
+        }
+        // Verifica se está lendo PDF
+        if (isPdfReading && element === fileNameContainer) {
+            return; // Não cancela se estiver lendo o PDF e é o fileNameContainer
+        }
+        // Se não estiver lendo nada, cancela a fala
+        if (!isSpeaking && !isPdfReading) {
+            resetSpeech();
+        }
+    });
+}
 
     // Chamadas para inicializar os eventos de mouseenter
     handleMouseEnter(hoverTitleText, 'Digital accessibility. First, select a language: "P" for Portuguese and "E" for English. Then, press "L" to load a text. AND: press "ENTER" to listen, "S" to stop and "C" to go on', 'en-US');
