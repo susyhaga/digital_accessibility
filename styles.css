@@ -1,38 +1,51 @@
 /* Estilos gerais */
+*{
+    margin: 0 0;
+    padding:0;
+    box-shadow: none;
+    font-family: Roboto, sans-serif;
+    font-weight: bold;
+    outline: none;
+}
+
 body {
     background-image: url('src/back.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    font-family: 'Roboto', sans-serif;
-    font-weight: bold;
-    outline: none;
+    background-attachment: fixed; /* Mantém o background fixo */
+
 }
+
 
 /* Estilos do cabeçalho */
 .container_head {
+    max-width: 1024px;
+    width: 100%;
+    margin: 0 auto; /* CENTRALIZA NA HORIZONTAL */
     display: flex;
-    justify-content: center;
-    align-items: center;
     font-size: 80px;
     margin-top: 50px;
     margin-bottom: 90px;
     border-color: white;
 }
 
+
 /* Estilos dos ícones de acesso do HEAD */
 .acces_icon {
-    margin-left: 2px;
+    padding-left: 14px;
     opacity: 9%;
-    width: 200px;
+    width: 230px;
     height: auto;
 }
 
+
 #hoverTitleText {
-    padding-top: 40px;
+    margin-top: 100px;
     width: 100%;
     height: 100%;
 }
+
 
 .line {
     width: 100%;
@@ -45,16 +58,24 @@ body {
     opacity: 10%;
 }
 
+
 /* Estilos do título h1 */
 h1 {
+    padding-top: 60px;
+    padding-right: 20px;
     background: linear-gradient(to right, #adaeec, #5568e8);
     -webkit-background-clip: text;
     color: transparent;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
+    }
+
 
 .container {
-    margin-top: 40px;
+    margin: 0;
+    padding:0;
+    width: 100%;
+    height: 20%;
+    
 }
 
 /* Estilos dos labels de seleção */
@@ -64,19 +85,21 @@ h1 {
     width: 90px;
     height: 24px;
     margin-top: 20px;
-    /* margin-left: 70px; */
 }
+
 
 #select_lang {
     font-size: 40px;
     font-weight: bold;
 }
 
+
 .file-label {
     padding-left: 50px;
     font-size: 40px;
     font-weight: bold;
 }
+
 
 .div_sub {
     margin-top: 80px;
@@ -85,6 +108,7 @@ h1 {
     gap:4;
 }
 
+
 /* Estilos do subtítulo */
 .sub_title {
     color: #adaeec;
@@ -92,12 +116,14 @@ h1 {
     padding-right: 10px;
     font-size: 28px;
     flex: 1; /* Faz o h2 ocupar o espaço disponível */
-}
+    }
+
 
 span {
     font-weight: bold;
     animation: shine 2.5s infinite;
 }
+
 
 @keyframes shine {
     0% {
@@ -108,7 +134,7 @@ span {
     }
     100% {
         color: #283067;
-    }
+}
 }
 
 /* Estilos dos botões e elementos relacionados */
@@ -118,7 +144,7 @@ span {
     display: flex;
     gap: 2px;
     justify-content: center; /* Centraliza os botões horizontalmente */
-}
+    }
 
 
 .all_buttons button {
@@ -127,19 +153,17 @@ span {
     background-color: #9e9fc6;
     display: flex;
     gap: 6px;
-    border: none;
     cursor: pointer;
     transition: background-color 0.3s ease;
     white-space: nowrap;
-    outline: none;
     border: solid 4px #5568e8;
 }
-
 
 .all_buttons button:hover {
     color: #ffffff;
     background-color: #283067;
 }
+
 
 /* Estilos específicos para botões de ação */
 .button_play,
@@ -148,6 +172,7 @@ span {
     min-width: 100px;
     max-width: 200px;
 }
+
 
 /* Estilos dos ícones dos botões play, stop, continue */
 .icon_listen,
@@ -161,6 +186,7 @@ span {
     display: inline-flex;
 }
 
+
 /* Estilos do botão de arquivo */
 .button_file {
     width: 150px;
@@ -171,10 +197,12 @@ span {
     transition: background-color 0.3s ease;
 }
 
+
 .button_file:hover {
     color: #ffffff;
     background-color: #283067;
 }
+
 
 /* Estilos do textarea personalizado */
 .custom-textarea {
@@ -184,93 +212,98 @@ span {
     cursor: pointer;
     align-items: center;
     justify-content: center;
-}
+    }
+
 
 /* Estilos do select personalizado */
 .form-select {
-    margin-top: 5px;
-    margin-right: 94px;
-    padding-left: 2px;
-    padding-right: 12px;
-    width: 140px;
-    height: 40px;
-    font-size: 20px;
-    font-weight: bold;
-    background-color: white;
-    color: #000000;
-    border: solid 4px #5568e8;
-    cursor: pointer;
-    outline: none;
-    box-shadow: none;
+margin-top: 5px;
+margin-right: 94px;
+padding-left: 2px;
+padding-right: 12px;
+width: 140px;
+height: 40px;
+font-size: 20px;
+font-weight: bold;
+background-color: white;
+color: #000000;
+border: solid 4px #5568e8;
+cursor: pointer;
+outline: none;
+box-shadow: none;
 }
 
 .form-select:active {
-    background-color: #283067;
+background-color: #283067;
 }
+
 
 /* Estilos do input de arquivo */
 #fileInput {
-    display: none;
+display: none;
 }
+
 
 /* Estilos do container para nome do arquivo */
 #fileNameContainer {
-    border: none;
-    font-size: 24px;
-    color: #ffffff;
-    font-weight: bolder;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: calc(100% - 90px);
+border: none;
+font-size: 24px;
+color: #ffffff;
+font-weight: bolder;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+max-width: calc(100% - 90px);
 }
 
+
 /* Media Queries para telas menores */
-@media screen and (min-width: 300px) and (max-width: 1023px) {
-/* Estilos do cabeçalho */
+@media screen and (max-width: 1023px){
+    /* Estilos do cabeçalho */
     .container_head {
-        margin-left: 20px;
+        margin-left: 170px;
     }
 
     .container_head h1{
         font-size: 60px;
     }
+
+    .container {
+        width: 60%;
+        height: 20%;
+
+    }
     /* Estilos dos ícones de acesso do HEAD */
     .acces_icon {
         margin-right: 50px;
         opacity: 9%;
-        width: 140px;
+        width: 180px;
         height: auto;
     }
     .select-label{
-        width: 12px;
+        width: 8px;
+        margin-left: 90px;
     }
     #select_lang{
         font-size: 26px;
-        margin-left: 40px;
+        margin-left: 20px;
     }
-
-
     .file-label {
         font-size: 26px;
         padding-left: 30px;
-
     }
-
     .div_sub {
         margin-top: 80px;
-        margin-right: 10px;
-        flex-direction: column;
+        margin-left: 100px;
     }
-    
     /* Estilos do subtítulo */
     .sub_title {
         font-size: 18px;
-        flex: 1; /* Faz o h2 ocupar o espaço disponível */    
+        flex: 1; /* Faz o h2 ocupar o espaço disponível */   
     }
     .all_buttons {
         justify-content: flex-start; /* Alinha os botões à esquerda */
-        margin-right: 4px;
+        margin-left: 100px;
     }
 
     .all_buttons button {
@@ -285,13 +318,125 @@ span {
     }
 
     .custom-textarea {
-        width: 660px;
+        margin-left: 100px;
+        width: 740px;
         height: 300px; /* Reduz a altura do textarea em telas menores */
     }
 
     .form-select {
-        width: 20%; /* Ajusta o width do select para ocupar 100% da largura em telas menores */
+        width: 15%; /* Ajusta o width do select para ocupar 100% da largura em telas menores */
         margin-right: 0;
     }
 }
+
+/* Media Queries para telas menores */
+@media screen and (max-width: 780px) {
+    /* Estilos do cabeçalho */
+    .container_head {
+        padding-left: 100px;
+        padding-bottom: 80px;
+        margin:0;
+    }
+
+    .container_head h1{
+        font-size: 38px;
+    }
+    /* Estilos dos ícones de acesso do HEAD */
+    .acces_icon {
+        margin-top: 20px;
+        width: 120px;
+        height: 100px;
+    }
+    .container {
+        padding:0;
+
+    }
+    .select-label{
+        margin-left: -20px;
+    
+    }
+    #select_lang{
+        font-size: 20px;
+        padding-left: 2px;
+    }
+    .file-label {
+        font-size: 20px;
+        padding-left: 28px;
+    }
+    .form-select {
+        font-size: 12px;
+        width: 100px; /* Ajusta o width do select para ocupar 100% da largura em telas menores */
+        margin-right: 0;
+    }
+    .button_file{
+        margin-top: 8px;
+        width: 90px;
+        font-size: 12px;
+        padding:8px;
+
+    }
+    .div_sub {
+        display: flex; /* Alterado para flex para alinhar itens lado a lado */
+        align-items: center; /* Centraliza verticalmente os itens */
+        margin-top: 60px;
+        margin-left: 2px;
+    }
+/* Estilos do subtítulo */
+    .sub_title {
+        font-size: 14px;
+        font-weight: bold;
+        white-space: nowrap; /* Impede que o título quebre em várias linhas */
+        overflow: hidden; /* Oculta o texto que ultrapassa o contêiner */
+        text-overflow: ellipsis; /* Adiciona reticências no final do texto que ultrapassa o contêiner */
+        margin-right: 20px; /* Ajusta a margem entre o subtítulo e os botões */
+        margin-left: 84px;
+    }
+
+    
+    .all_buttons {
+        display: flex; /* Alterado para flex para alinhar itens lado a lado */
+        align-items: center; /* Centraliza verticalmente os itens */
+        margin-left: 12px; /* Ajusta a margem entre o subtítulo e os botões */
+        flex-wrap: nowrap; /* Permite que os botões não quebrem para a linha abaixo se necessário */
+
+    }
+
+    .all_buttons button {
+        font-size: 12px; /* Reduz ainda mais o tamanho da fonte dos botões */
+        padding: 6px 8px; /* Ajusta o padding dos botões */
+        margin-right: 2px;
+        position: relative; /* Permite o posicionamento relativo para os ícones */
+        overflow: hidden; /* Evita que os ícones vazem para fora do botão */
+
+    }
+
+    /* Estilos específicos para botões de ação */
+    .button_play,
+    .button_stop,
+    .button_continue {
+        min-width: 68px; /* Ajuste o valor de min-width conforme necessário */
+        max-width: 88px; /* Ajuste o valor de max-width conforme necessário */
+        
+    }
+
+    /* Estilos específicos para ícones dentro dos botões */
+    .button_play .icon_listen,
+    .button_stop .icon_stop,
+    .button_continue .icon_continue {
+        margin-left: -10px; /* Ajusta a margem esquerda dos ícones para alinhá-los à esquerda */
+        margin-right: 2px; /* Ajusta a margem entre o ícone e o texto do botão */
+        font-size: 1.2rem; /* Reduz o tamanho dos ícones dos botões em telas menores */
+        max-width: 20px;
+    }
+
+
+    .custom-textarea {
+        margin-left: -20px;
+
+        width: 540px;
+        height: 300px; /* Reduz a altura do textarea em telas menores */
+    }
+}
+    
+
 
