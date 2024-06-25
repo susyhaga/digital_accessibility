@@ -1,5 +1,12 @@
 document.addEventListener('DOMContentLoaded', function () {
+    //para ver se o nav suporta a api speechSynthesis
+    if ('speechSynthesis' in window) {
+        console.log('A API speechSynthesis é suportada neste navegador.');
+    } else {
+        console.log('A API speechSynthesis não é suportada neste navegador.');
+    }
 
+    speakText('Welcome to Digital accessibility. Here you can listen to all the text type. Select a language: P for Portuguese and E for English. Then, press "L" to load a text. And press "ENTER" to listen, "S" to stop and "C" to go on. Enjoy it!', 'en-US');
 
     // Seleção de elementos do DOM
     const selectLangElement = document.getElementById('select_lang');
@@ -26,7 +33,6 @@ document.addEventListener('DOMContentLoaded', function () {
     let resumeIndex = 0;
     let pdfContent = '';
     let typedWord = '';
-    speakText('Welcome to Digital accessibility. Here you can listen to all the text type. Select a language: P for Portuguese and E for English. Then, press "L" to load a text. And press "ENTER" to listen, "S" to stop and "C" to go on. Enjoy it!', 'en-US');
 
     //FUNCOES GLOBAIS
 
@@ -288,8 +294,6 @@ document.addEventListener('DOMContentLoaded', function () {
         reader.readAsArrayBuffer(file);
     }
 
-
-
     // Função para falar o conteúdo do PDF
     function speakPdfContent(text, lang, onEndCallback) {
         if (isSpeaking) return;
@@ -368,7 +372,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-
     // Evento ao pressionar o botão de Continue
     buttonContinue.addEventListener('click', function () {
         console.log('Botão "Continue" clicado.'); // Debugging: Verifica se o evento de clique está sendo detectado
@@ -379,19 +382,18 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Função para lidar com mouseenter
-    // Função para lidar com mouseenter
-function handleMouseEnter(element, text, lang) {
-    element.addEventListener('mouseenter', function () {
-        if (!isSpeaking && !isPdfReading) {
-            // Fala o texto apenas se não estiver lendo o textarea
-            if (!isTextAreaReading || element !== hoverTextArea) {
-                speakText(text, lang);
+    function handleMouseEnter(element, text, lang) {
+        element.addEventListener('mouseenter', function () {
+            if (!isSpeaking && !isPdfReading) {
+                // Fala o texto apenas se não estiver lendo o textarea
+                if (!isTextAreaReading || element !== hoverTextArea) {
+                    speakText(text, lang);
+                }
+            } else {
+                console.log('Não foi possível falar o texto. A síntese de fala já está em andamento ou pausada.');
             }
-        } else {
-            console.log('Não foi possível falar o texto. A síntese de fala já está em andamento ou pausada.');
-        }
-    });
-}
+        });
+    }
 
 
     // Função genérica para cancelar a fala quando o usuário sai do elemento
@@ -411,7 +413,6 @@ function handleMouseEnter(element, text, lang) {
             }
         });
     }
-
 
     // Chamadas para inicializar os eventos de mouseenter
     handleMouseEnter(hoverTitleText, 'Digital accessibility. First, select a language: "P" for Portuguese and "E" for English. Then, press "L" to load a text. AND: press "ENTER" to listen, "S" to stop and "C" to go on', 'en-US');
